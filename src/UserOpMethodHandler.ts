@@ -1,10 +1,10 @@
 import { BigNumber, Wallet } from 'ethers'
 import { JsonRpcSigner, Provider } from '@ethersproject/providers'
 
-import { BundlerConfig } from './BundlerConfig'
-import { BundlerHelper, EntryPoint } from './types'
-import { UserOperationStruct } from './types/contracts/BundlerHelper'
-import { hexValue, resolveProperties } from 'ethers/lib/utils'
+import { BundlerConfig } from './BundlerConfig';
+import { BundlerHelper, EntryPoint } from './types';
+import { UserOperationStruct } from './types/contracts/BundlerHelper';
+import { hexValue, resolveProperties } from 'ethers/lib/utils';
 
 export class UserOpMethodHandler {
   constructor (
@@ -31,7 +31,7 @@ export class UserOpMethodHandler {
   }
 
   async sendUserOperation (userOp1: UserOperationStruct, entryPointInput: string): Promise<string> {
-    const userOp = await resolveProperties(userOp1)
+    const userOp : UserOperationStruct = await resolveProperties(userOp1)
     if (entryPointInput.toLowerCase() !== this.config.entryPoint.toLowerCase()) {
       throw new Error(`The EntryPoint at "${entryPointInput}" is not supported. This bundler uses ${this.config.entryPoint}`)
     }
@@ -69,7 +69,7 @@ export class UserOpMethodHandler {
   }
 
   async printGasEstimationDebugInfo (userOp1: UserOperationStruct, beneficiary: string): Promise<void> {
-    const userOp = await resolveProperties(userOp1)
+    const userOp : UserOperationStruct = await resolveProperties(userOp1)
 
     const [estimateGasRet, estHandleOp, staticRet] = await Promise.all([
       this.bundlerHelper.estimateGas.handleOps(0, this.config.entryPoint, [userOp], beneficiary),
